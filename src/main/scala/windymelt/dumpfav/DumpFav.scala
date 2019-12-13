@@ -9,11 +9,11 @@ trait DumpFav {
     with LocalFavRepositoryComponent
     with TwitterComFavRepositoryComponent =>
 
-  def run() = {
+  def run(screenName: String) = {
     implicit val ec: scala.concurrent.ExecutionContext =
       scala.concurrent.ExecutionContext.global
     val future = twitterComFavRepository
-      .findFavs("windymelt", cursorRepository.getCursor())
+      .findFavs(screenName, cursorRepository.getCursor())
       .map(localFavRepository.commit)
       .andThen(_ => println("done"))
       .onComplete(_ => sys.exit(0))

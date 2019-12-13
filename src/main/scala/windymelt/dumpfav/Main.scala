@@ -15,5 +15,5 @@ object DumpFavApp
   override val cursorRepository = new CursorRepository("tmp/tweetdump.conf")
   override val localFavRepository = new LocalFavRepository("tmp/tweetdump.dat")
   override val twitterComFavRepository = new TwitterComFavRepository()
-  this.run()
+  this.run("windymelt")
 }
