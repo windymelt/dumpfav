@@ -6,7 +6,7 @@ import upickle.default.write
 import upickle.default.{ReadWriter => RW, macroRW}
 import scala.concurrent.Future
 
-case class Tweet(text: String, user: String)
+case class Tweet(id: Long, text: String, user: String, createdAtEpochMillis: Long)
 object Tweet {
   implicit val rw: RW[Tweet] = macroRW
 }
@@ -32,7 +32,7 @@ trait TwitterComFavRepositoryComponent {
     }
 
     private implicit val convertTweet: OrigTweet => Tweet = (tw) => {
-      Tweet(tw.text, tw.user.map(_.screen_name).getOrElse("n/a"))
+      Tweet(tw.id, tw.text, tw.user.map(_.screen_name).getOrElse("n/a"), tw.created_at.toEpochMilli())
     }
 
     private def convert(rd: RatedData[Seq[OrigTweet]]): Dump = {
