@@ -1,1 +1,5 @@
 target/
+.metals
+.bloop
+run.sh
+tmp/
