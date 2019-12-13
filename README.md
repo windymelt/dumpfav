@@ -37,9 +37,9 @@ It is read and replaced every time `Main.scala` runs.
 JSON-formatted, one tweet per line like below:
 
 ```json
-{ "text": "buzz" }
-{ "text": "bar" }
-{ "text": "foo" }
+{"id":"55555","text":"hello","user":"example","createdAtEpochMillis":1574360341000}
+{"id":"44444","text":"hi","user":"example","createdAtEpochMillis":1574360331000}
+{"id":"33333","text":"yo","user":"example","createdAtEpochMillis":1574360321000}
 ...
 ```
 
