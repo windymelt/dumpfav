@@ -26,12 +26,12 @@ exec sbt run
 
 `Main.scala` generates *cursor file* and *data file*.
 
-## Cursor file
+### Cursor file
 
 *Cursor file* records minimum tweet id per acquire.
 It is read and replaced every time `Main.scala` runs.
 
-## Data file
+### Data file
 
 *Data file* records your favs.
 JSON-formatted, one tweet per line like below:
