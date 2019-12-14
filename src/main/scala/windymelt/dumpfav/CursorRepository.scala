@@ -3,6 +3,7 @@ package windymelt.dumpfav
 import io.Source
 import java.io.File
 import java.io.FileWriter
+import upickle.default.{write, read}
 
 trait CursorRepositoryComponent {
 
@@ -17,15 +18,22 @@ trait CursorRepositoryComponent {
         Source.fromFile(configPath)
     }
 
-    def getCursor(): Option[Long] = {
-      val cursor = source.getLines().nextOption()
-      return cursor.flatMap(_.toLongOption)
-    }
+    def getCursor(): Option[Cursor] =
+      try {
+        Some(read[Cursor](new File(configPath)))
+      } catch {
+        case e: ujson.IncompleteParseException => None
+      }
 
-    def saveCursor(cursor: Long) = {
+    def saveCursor(
+        olderCursor: Long,
+        laterCursor: Long,
+        reachedBottom: Boolean
+    ) = {
       val f = new File(configPath)
       val pwc = new FileWriter(f)
-      pwc.write(cursor.toString())
+      val serialized = Cursor(olderCursor, laterCursor, reachedBottom)
+      pwc.write(write(serialized))
       pwc.close()
     }
   }

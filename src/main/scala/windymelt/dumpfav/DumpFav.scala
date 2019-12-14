@@ -12,9 +12,10 @@ trait DumpFav {
   def run(screenName: String) = {
     implicit val ec: scala.concurrent.ExecutionContext =
       scala.concurrent.ExecutionContext.global
+      val cursor = cursorRepository.getCursor()
     val future = twitterComFavRepository
-      .findOlderFavs(screenName, cursorRepository.getCursor())
-      .map(localFavRepository.commit)
+      .findOlderFavs(screenName, cursor.map(_.olderCursor))
+      .map(localFavRepository.commit(preCursor = cursor))
       .andThen(_ => println("done"))
       .onComplete(_ => sys.exit(0))
   }
