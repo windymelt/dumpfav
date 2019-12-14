@@ -1,4 +1,4 @@
-package windymelt.dumpfav
+package windymelt.dumpfav.model
 
 import upickle.default.{ReadWriter => RW, macroRW}
 

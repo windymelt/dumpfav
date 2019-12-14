@@ -1,15 +1,16 @@
-package windymelt.dumpfav
+package windymelt.dumpfav.infra
 
 import io.Source
 import java.io.File
 import java.io.FileWriter
 import upickle.default.{write, read}
+import windymelt.dumpfav.model.Cursor
 
-trait CursorRepositoryComponent {
+trait CursorRepositoryComponent extends windymelt.dumpfav.repository.CursorRepositoryComponent {
 
-  val cursorRepository: CursorRepository
+  override val cursorRepository: CursorRepository
 
-  class CursorRepository(configPath: String) {
+  class LocalCursorRepository(configPath: String) extends CursorRepository{
     private val source = try {
       Source.fromFile(configPath)
     } catch {

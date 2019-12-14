@@ -9,11 +9,11 @@ import java.io.FileReader
 object DumpFavApp
     extends App
     with DumpFav
-    with CursorRepositoryComponent
-    with LocalFavRepositoryComponent
-    with TwitterComFavRepositoryComponent {
-  override val cursorRepository = new CursorRepository("tmp/tweetdump.conf")
-  override val localFavRepository = new LocalFavRepository("tmp/tweetdump.dat")
-  override val twitterComFavRepository = new TwitterComFavRepository()
+    with infra.CursorRepositoryComponent
+    with infra.LocalFileFavRepositoryComponent
+    with infra.RealTwitterComFavRepositoryComponent {
+  override val cursorRepository = new LocalCursorRepository("tmp/tweetdump.conf")
+  override val favTankRepository = new LocalFileFavRepository("tmp/tweetdump.dat")
+  override val twitterComFavRepository = new RealTwitterComFavRepository()
   this.run("windymelt")
 }

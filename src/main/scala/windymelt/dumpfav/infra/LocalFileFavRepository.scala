@@ -1,16 +1,17 @@
-package windymelt.dumpfav
+package windymelt.dumpfav.infra
 
 import java.io.File
 import java.io.FileWriter
 import upickle.default.write
 import upickle.default.{ReadWriter => RW, macroRW}
+import windymelt.dumpfav.model.{Cursor, Dump}
 
-trait LocalFavRepositoryComponent {
+trait LocalFileFavRepositoryComponent extends windymelt.dumpfav.repository.FavTankRepositoryComponent {
   self: CursorRepositoryComponent =>
 
-  val localFavRepository: LocalFavRepository
+  override val favTankRepository: FavTankRepository
 
-  class LocalFavRepository(dataFilePath: String) {
+  class LocalFileFavRepository(dataFilePath: String) extends FavTankRepository {
     def commit(preCursor: Option[Cursor])(d: Dump) = {
       cursorRepository.saveCursor(
         olderCursor = preCursor

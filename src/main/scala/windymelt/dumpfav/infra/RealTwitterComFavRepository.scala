@@ -1,31 +1,17 @@
-package windymelt.dumpfav
+package windymelt.dumpfav.infra
 
 import com.danielasfregola.twitter4s.TwitterRestClient
 import com.danielasfregola.twitter4s.entities.{Tweet => OrigTweet, RatedData}
 import upickle.default.write
 import upickle.default.{ReadWriter => RW, macroRW}
 import scala.concurrent.Future
+import windymelt.dumpfav.model.{Tweet, Dump}
 
-case class Tweet(
-    id: Long,
-    text: String,
-    user: String,
-    createdAtEpochMillis: Long
-)
-object Tweet {
-  implicit val rw: RW[Tweet] = macroRW
-}
+trait RealTwitterComFavRepositoryComponent extends windymelt.dumpfav.repository.TwitterComFavRepositoryComponent {
 
-case class Dump(olderCursor: Long, laterCursor: Long, tweets: Seq[Tweet])
-object Dump {
-  implicit val rw: RW[Dump] = macroRW
-}
+  override val twitterComFavRepository: TwitterComFavRepository
 
-trait TwitterComFavRepositoryComponent {
-
-  val twitterComFavRepository: TwitterComFavRepository
-
-  class TwitterComFavRepository {
+  class RealTwitterComFavRepository extends TwitterComFavRepository {
     val client = TwitterRestClient()
 
     def findOlderFavs(screenName: String, cursor: Option[Long])(
