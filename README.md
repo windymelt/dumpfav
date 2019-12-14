@@ -28,8 +28,12 @@ exec sbt run
 
 ### Cursor file
 
-*Cursor file* records minimum tweet id per acquire.
+*Cursor file* records min/max tweet id.
 It is read and replaced every time `Main.scala` runs.
+
+```json
+{"olderCursor":"1167770094509838336","laterCursor":"1205548676443017217","reachedBottom":false}
+```
 
 ### Data file
 
