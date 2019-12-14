@@ -23,7 +23,7 @@ trait TwitterComFavRepositoryComponent {
   class TwitterComFavRepository {
     val client = TwitterRestClient()
 
-    def findFavs(screenName: String, cursor: Option[Long])(
+    def findOlderFavs(screenName: String, cursor: Option[Long])(
         implicit ec: scala.concurrent.ExecutionContext
     ): Future[Dump] = {
       client

@@ -13,7 +13,7 @@ trait DumpFav {
     implicit val ec: scala.concurrent.ExecutionContext =
       scala.concurrent.ExecutionContext.global
     val future = twitterComFavRepository
-      .findFavs(screenName, cursorRepository.getCursor())
+      .findOlderFavs(screenName, cursorRepository.getCursor())
       .map(localFavRepository.commit)
       .andThen(_ => println("done"))
       .onComplete(_ => sys.exit(0))
